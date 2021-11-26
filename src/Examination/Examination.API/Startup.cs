@@ -42,11 +42,11 @@ namespace Examination.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var user = Configuration.GetValue<string>("DatabaseSettings:User");
-            var password = Configuration.GetValue<string>("DatabaseSettings:Password");
-            var server = Configuration.GetValue<string>("DatabaseSettings:Server");
-            var databaseName = Configuration.GetValue<string>("DatabaseSettings:DatabaseName");
-            var mongodbConnectionString = "mongodb://" + user + ":" + password + "@" + server + "/" + databaseName + "?authSource=admin";
+            //var user = Configuration.GetValue<string>("DatabaseSettings:User");
+            //var password = Configuration.GetValue<string>("DatabaseSettings:Password");
+            //var server = Configuration.GetValue<string>("DatabaseSettings:Server");
+            //var databaseName = Configuration.GetValue<string>("DatabaseSettings:DatabaseName");
+            //var mongodbConnectionString = "mongodb://" + user + ":" + password + "@" + server + "/" + databaseName + "?authSource=admin";
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
@@ -65,7 +65,7 @@ namespace Examination.API
 
             services.AddSingleton<IMongoClient>(c =>
             {
-                return new MongoClient(mongodbConnectionString);
+                return new MongoClient("mongodb://linh2nguyen:mr6iLL5KNp5piiK1M8gSFoiEqlVrYyMl0gcwv2LdbN2tlAITKnzTIij8TbkwnsxWkHUMFEv878y6ypY9RqVHzw==@linh2nguyen.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@linh2nguyen@");
             });
 
             services.AddScoped(c => c.GetService<IMongoClient>()?.StartSession());
@@ -134,7 +134,7 @@ namespace Examination.API
             //Health check
             services.AddHealthChecks()
                     .AddCheck("self", () => HealthCheckResult.Healthy())
-                    .AddMongoDb(mongodbConnectionString: mongodbConnectionString,
+                    .AddMongoDb(mongodbConnectionString: "mongodb://linh2nguyen:mr6iLL5KNp5piiK1M8gSFoiEqlVrYyMl0gcwv2LdbN2tlAITKnzTIij8TbkwnsxWkHUMFEv878y6ypY9RqVHzw==@linh2nguyen.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@linh2nguyen@",
                                 name: "mongo",
                                 failureStatus: HealthStatus.Unhealthy);
 
